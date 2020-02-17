@@ -13,6 +13,11 @@ public class Movie {
     private int[] genre_ids;
     private String title;
     private double vote_average;
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
+    }
+
     private String text;
     private String release_date;
     public double getPopularity() {

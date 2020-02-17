@@ -12,4 +12,9 @@ public interface GetMovieDataService {
     Call<ResultsList> getMovies(
             @Query("api_key") String apiKey
     );
+
+    @GET("top_rated")
+    Call<ResultsList> getTopRatedMovies(
+            @Query("api_key") String apiKey
+    );
 }
