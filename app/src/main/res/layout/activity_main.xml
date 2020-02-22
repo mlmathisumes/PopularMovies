@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#607d8b"
-    tools:context=".UI.MainActivity">
+    android:background="@color/colorPrimary"
+    tools:context=".ui.MainActivity">
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/rv_Movies"

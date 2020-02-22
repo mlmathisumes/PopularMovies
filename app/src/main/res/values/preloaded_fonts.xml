@@ -3,6 +3,7 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/allan_bold</item>
         <item>@font/amaranth_bold</item>
+        <item>@font/arima_madurai_bold</item>
         <item>@font/bungee_shade</item>
     </array>
 </resources>

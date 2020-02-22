@@ -1,4 +1,4 @@
-package com.example.popularmovies.Model;
+package com.example.popularmovies.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -9,11 +9,11 @@ public class  ResultsList {
     @SerializedName("results")
     private ArrayList<Movie> movieList;
 
-    public ArrayList<Movie> getMovieList() {
+    public ArrayList<Movie> getPopularMovieList() {
         return movieList;
     }
 
-    public ArrayList<Movie> getTopRatedMovies(){
+    public ArrayList<Movie> getTopRatedMoviesList(){
         return movieList;
     }
 
