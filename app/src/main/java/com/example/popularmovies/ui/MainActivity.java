@@ -23,11 +23,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LifecycleOwner {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
-    MainActivity context;
+    private MainActivity context;
     private RecyclerView recyclerView;
     private MovieRecyclerViewAdapter adapter;
-    private int numberOfColumns = 3;
+    private final int NUMBER_OF_COLUMNS = 3;
     private MovieListViewModel viewModel;
     private Menu menu;
 
@@ -41,15 +40,21 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
+        /*
+         * Using findViewById, we get a reference to our RecyclerView from xml. This allows us to
+         * do things like set the adapter of the RecyclerView and toggle the visibility.
+         */
         recyclerView = findViewById(R.id.rv_Movies);
         context = this;
 
+
+         // Initialize MovieList viewModel
         viewModel = ViewModelProviders.of(context).get(MovieListViewModel.class);
         viewModel.getMovieMutableLiveData().observe(context, new Observer<ArrayList<Movie>>() {
             @Override
             public void onChanged(ArrayList<Movie> movieArrayList) {
                 adapter = new MovieRecyclerViewAdapter(context, movieArrayList);
-                recyclerView.setLayoutManager(new GridLayoutManager(context, numberOfColumns));
+                recyclerView.setLayoutManager(new GridLayoutManager(context, NUMBER_OF_COLUMNS));
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -85,7 +90,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleOwner {
         return true;
     }
 
-    public void hideSortOption(String sort){
+    /**
+     * This method disables the menu option based on the selected sort listing
+     *
+     * @param sort The selected sort option (rating or popularity)
+     */
+    private void hideSortOption(String sort){
         if(sort.equals("rating")){
             menu.getItem(1).setEnabled(false);
             menu.getItem(0).setEnabled(true);

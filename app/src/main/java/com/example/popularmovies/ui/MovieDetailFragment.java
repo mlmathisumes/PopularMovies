@@ -4,7 +4,6 @@ package com.example.popularmovies.ui;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,9 +39,9 @@ public class MovieDetailFragment extends Fragment {
     private TextView tvOriginalTitle;
     private TextView tvReleaseDate;
     private TextView tvRating;
-    public static final String PATTERN = "MM/DD/YYYY";
+    private static final String PATTERN = "MM/DD/YYYY";
 
-    public MovieDetailFragment(){
+    public MovieDetailFragment() {
 
     }
 
@@ -50,7 +49,7 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.movie_desc, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         imageView = rootView.findViewById(R.id.iv_movie_backdrop);
         collapsingToolbarLayout = rootView.findViewById(R.id.collapsingTL);
         toolbar = rootView.findViewById(R.id.toolbar);
@@ -70,35 +69,44 @@ public class MovieDetailFragment extends Fragment {
         });
 
         Bundle bundle = this.getArguments();
-        movie = bundle.getParcelable("movie");
+        if (bundle != null) {
+            movie = bundle.getParcelable("movie");
+            setDetailView();
+        }
+        return rootView;
+    }
 
-        if(movie.getPoster_path() != null){
+    private void setDetailView() {
+        if (movie.getPoster_path() != null) {
             String url = "https://image.tmdb.org/t/p/w185" + movie.getPoster_path();
             Glide.with(getActivity()).load(url).into(ivMoviePoster);
             collapsingToolbarLayout.setTitle(movie.getTitle());
-        }if(movie.getBackdrop_path() != null){
+        }
+        if (movie.getBackdrop_path() != null) {
             String url = "https://image.tmdb.org/t/p/w342" + movie.getBackdrop_path();
             Glide.with(getActivity()).load(url).into(imageView);
-            String content = movie.getOverview();
-            Spanned html = Html.fromHtml(content);
-            flowTextView.setTextSize(60);
+            Spanned html = Html.fromHtml(movie.getOverview());
+            flowTextView.setTextSize(65);
             flowTextView.setColor(R.color.colorContent);
             flowTextView.setText(html);
-
-        }else{
-            Log.d(TAG, "Unable to download poster image");
         }
-        tvOriginalTitle.setText(movie.getOriginal_title());
-        tvRating.setText(movie.getVote_average() + "/10");
+        if (movie.getOriginal_title() != null) {
+            tvOriginalTitle.setText(movie.getOriginal_title());
 
-        try {
-            Date date = new SimpleDateFormat(PATTERN).parse(movie.getRelease_date());
-            tvReleaseDate.setText(date.toString());
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-
-
-        return  rootView;
+        if (movie.getVote_average() > 0) {
+            tvRating.setText(movie.getVote_average() + "/10");
+        }
+        if (movie.getRelease_date() != null) {
+            try {
+                Date date = new SimpleDateFormat(PATTERN).parse(movie.getRelease_date());
+                tvReleaseDate.setText(date.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 }
+
+

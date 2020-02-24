@@ -19,10 +19,15 @@ import com.example.popularmovies.ui.MovieDetailActivity;
 
 import java.util.ArrayList;
 
+/**
+ * {@link MovieRecyclerViewAdapter} exposes a list of movies to a
+ * {@link androidx.recyclerview.widget.RecyclerView}
+ */
+
 public class MovieRecyclerViewAdapter extends
         RecyclerView.Adapter<MovieRecyclerViewAdapter.MovieRecyclerViewHolder> {
 
-    public static final String TAG = MovieRecyclerViewAdapter.class.getSimpleName();
+    private static final String TAG = MovieRecyclerViewAdapter.class.getSimpleName();
     private ArrayList<Movie> mMovieArrayList;
     private LayoutInflater mInflater;
     private Context context;
@@ -51,6 +56,11 @@ public class MovieRecyclerViewAdapter extends
             Log.d(TAG, "Unable to download poster image");
         }
 
+        /**
+         * This gets called by the child views during a click.
+         *
+         * @param view The View that was clicked
+         */
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +71,9 @@ public class MovieRecyclerViewAdapter extends
         });
     }
 
+    /**
+     * Cache of the children views for a movie list item.
+     */
     public class MovieRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView iv_Poster;

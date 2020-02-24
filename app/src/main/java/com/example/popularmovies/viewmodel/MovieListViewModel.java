@@ -20,14 +20,14 @@ import retrofit2.Response;
 public class MovieListViewModel extends ViewModel {
 
     private static final String TAG = MovieListViewModel.class.getSimpleName();
-    private MutableLiveData<ArrayList<Movie>> movieLiveData;
+    private MutableLiveData<ArrayList<Movie>> movieListLiveData;
     private ArrayList<Movie> movieArrayList;
     private GetMovieDataService jsonMovieDBApi;
-    private static final String API_KEY = "f4ea32f9b797782899f3f11f86e81007";
+    private static final String API_KEY = "";
 
 
     public MovieListViewModel(){
-        movieLiveData = new MutableLiveData<>();
+        movieListLiveData = new MutableLiveData<>();
 
         init();
     }
@@ -35,10 +35,10 @@ public class MovieListViewModel extends ViewModel {
 
 
     public MutableLiveData<ArrayList<Movie>> getMovieMutableLiveData(){
-        if(movieLiveData == null){
-            movieLiveData = new MutableLiveData<>();
+        if(movieListLiveData == null){
+            movieListLiveData = new MutableLiveData<>();
         }
-        return  movieLiveData;
+        return movieListLiveData;
     }
 
     public void init() {
@@ -56,7 +56,7 @@ public class MovieListViewModel extends ViewModel {
             public void onResponse(Call<ResultsList> call, Response<ResultsList> response) {
                 movieArrayList = response.body().getPopularMovieList();
                 if(movieArrayList != null){
-                    movieLiveData.setValue(movieArrayList);
+                    movieListLiveData.setValue(movieArrayList);
                     Log.d(TAG, "Live Data set");
 
                 }else{
@@ -79,7 +79,7 @@ public class MovieListViewModel extends ViewModel {
             public void onResponse(Call<ResultsList> call, Response<ResultsList> response) {
                 movieArrayList = response.body().getTopRatedMoviesList();
                 if(movieArrayList != null){
-                    movieLiveData.setValue(movieArrayList);
+                    movieListLiveData.setValue(movieArrayList);
                     Log.d(TAG, "Live Data set");
 
                 }else{

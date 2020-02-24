@@ -25,8 +25,8 @@
             <ImageView
                 android:id="@+id/iv_movie_backdrop"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:contentDescription="Movie Poster"
+                android:layout_height="@dimen/movie_backdrop_height"
+                android:contentDescription="@string/movie_backdrop"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
@@ -53,16 +53,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginLeft="@dimen/movie_detail_margin"
+                android:layout_marginTop="@dimen/movie_detail_margin">
 
                 <TextView
                     android:id="@+id/tv_original_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sonic the Hedgehog"
                     android:textColor="@color/colorContent"
-                    android:textSize="22sp"
+                    android:textSize="@dimen/original_title_size"
                     android:textStyle="bold"
                     app:fontFamily="@font/arima_madurai_bold"
                     />
@@ -70,36 +69,35 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginTop="@dimen/widget_margin">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Release Date: "
-                        android:textSize="16sp"
-                        android:layout_marginRight="4dp"
+                        android:text="@string/release_date"
+                        android:textSize="@dimen/text_size"
+                        android:layout_marginRight="@dimen/widget_margin"
                         android:textColor="@color/colorContent" />
 
                     <TextView
                         android:id="@+id/tv_release_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:textSize="16sp"
-                        android:text="02/13/2020"
+                        android:layout_marginBottom="@dimen/widget_margin"
+                        android:textSize="@dimen/text_size"
                         android:textColor="@color/colorContent" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="4dp">
+                    android:layout_marginTop="@dimen/widget_margin">
                     <TextView
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="User Rating: "
-                        android:textSize="16sp"
-                        android:layout_marginRight="4dp"
+                        android:text="@string/user_rating"
+                        android:textSize="@dimen/text_size"
+                        android:layout_marginRight="@dimen/widget_margin"
                         android:textColor="@color/colorContent"
                         />
 
@@ -107,8 +105,7 @@
                         android:id="@+id/tv_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="5.9/10"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/text_size"
                         android:textColor="@color/colorContent" />
                 </LinearLayout>
             </LinearLayout>
@@ -116,20 +113,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="6px"
                     android:background="#eeeeee"
-                    android:layout_marginTop="4dp" />
+                    android:layout_marginTop="@dimen/widget_margin" />
             <uk.co.deanwild.flowtextview.FlowTextView
                 android:id="@+id/ftv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginTop="@dimen/widget_margin"
+                android:layout_marginLeft="@dimen/movie_detail_margin"
+                android:layout_marginRight="@dimen/movie_detail_margin">
                 <ImageView
                     android:id="@+id/iv_movie_poster"
-                    android:layout_width="100dp"
-                    android:layout_height="150dp"
-                    android:padding="15dp"
+                    android:layout_width="@dimen/movie_poster_width"
+                    android:layout_height="@dimen/movie_poster_height"
+                    android:padding="@dimen/movie_poster_padding"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
                     android:scaleType="centerCrop" />
@@ -144,8 +141,5 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
-
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
