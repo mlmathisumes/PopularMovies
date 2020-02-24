@@ -9,6 +9,8 @@
 * [UI](https://developer.android.com/guide/topics/ui) - Details on why and how to use UI Components in your apps - together or separate
   * [Fragment](https://developer.android.com/guide/components/fragments) - A basic unit of composable UI.
   * [FlowText](https://github.com/deano2390/FlowTextView) - A wrapping TextView for Android
+* Networking
+  * [Retrofit](https://square.github.io/retrofit/) - REST Client library (Helper Library) used in Android and Java to create an HTTP request and also to process the HTTP response from a REST API. 
 * Third party
   * [Glide](https://bumptech.github.io/glide/) for image loading
 # Upcoming features
