@@ -1,3 +1,8 @@
+# Getting Started
+This project uses [themoviedb.org](https://www.themoviedb.org/movie) API to pull in the movie data. In order to use the API, you will need to [create an](https://www.themoviedb.org/account/signup) account and request an API key. 
+
+Once you obtain your key, you append it to your HTTP request as a URL parameter like so:
+http://api.themoviedb.org/3/movie/popular?api_key=[YOUR_API_KEY]
 # Screenshots
 # Libraries Used
 
@@ -14,3 +19,4 @@
 * Third party
   * [Glide](https://bumptech.github.io/glide/) for image loading
 # Upcoming features
+Update Grid view to dynamically calculate the number of columns and the layout will adapt to the screen shize and orientation.
