@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,7 +43,8 @@ public class MovieDetailFragment extends Fragment {
     private TextView tvOriginalTitle;
     private TextView tvReleaseDate;
     private TextView tvRating;
-    private static final String PATTERN = "MM/DD/YYYY";
+    private static final String PATTERN = "YYYY-MM-DD";
+    public static final String NEW_FORMAT = "MM/dd/yyyy";
 
     public MovieDetailFragment() {
 
@@ -49,6 +54,35 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        View rootView = initView(inflater, container);
+      /*  View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
+        imageView = rootView.findViewById(R.id.iv_movie_backdrop);
+        collapsingToolbarLayout = rootView.findViewById(R.id.collapsingTL);
+        toolbar = rootView.findViewById(R.id.toolbar);
+        ivMoviePoster = rootView.findViewById(R.id.iv_movie_poster);
+        flowTextView = rootView.findViewById(R.id.ftv);
+        tvOriginalTitle = rootView.findViewById(R.id.tv_original_title);
+        tvRating = rootView.findViewById(R.id.tv_rating);
+        tvReleaseDate = rootView.findViewById(R.id.tv_release_date);
+        toolbar = rootView.findViewById(R.id.toolbar);
+
+        toolbar.setNavigationIcon(R.drawable.ic_keyboard_arrow_left);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });*/
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            movie = bundle.getParcelable("movie");
+            setDetailView();
+        }
+        return rootView;
+    }
+
+    private View initView(LayoutInflater inflater, ViewGroup container){
         View rootView = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         imageView = rootView.findViewById(R.id.iv_movie_backdrop);
         collapsingToolbarLayout = rootView.findViewById(R.id.collapsingTL);
@@ -67,12 +101,19 @@ public class MovieDetailFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+        toolbar.inflateMenu(R.menu.favorite);
+        Menu menu = toolbar.getMenu();
 
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            movie = bundle.getParcelable("movie");
-            setDetailView();
-        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId() == R.id.favorite){
+                    item.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
+                    Toast.makeText(getContext(), "Favorite was pressed", Toast.LENGTH_LONG).show();
+                }
+                return false;
+            }
+        });
         return rootView;
     }
 
@@ -99,8 +140,10 @@ public class MovieDetailFragment extends Fragment {
         }
         if (movie.getRelease_date() != null) {
             try {
-                Date date = new SimpleDateFormat(PATTERN).parse(movie.getRelease_date());
-                tvReleaseDate.setText(date.toString());
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(PATTERN);
+                Date date = simpleDateFormat.parse(movie.getRelease_date());
+                simpleDateFormat.applyPattern(NEW_FORMAT);
+                tvReleaseDate.setText(simpleDateFormat.format(date).toString());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
