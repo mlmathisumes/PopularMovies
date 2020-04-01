@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="movie_detail_margin">10dp</dimen>
-    <dimen name="original_title_size">22sp</dimen>
+    <dimen name="original_title_size">26sp</dimen>
     <dimen name="text_size">16sp</dimen>
     <dimen name="widget_margin">4dp</dimen>
     <dimen name="movie_poster_width">100dp</dimen>
@@ -9,4 +9,6 @@
     <dimen name="movie_poster_padding">15dp</dimen>
     <dimen name="movie_backdrop_height">400dp</dimen>
     <dimen name="toolbar_title_size">18sp</dimen>
+    <dimen name="loading_indicator">42dp</dimen>
+    <dimen name="cardview_margin">4dp</dimen>
 </resources>

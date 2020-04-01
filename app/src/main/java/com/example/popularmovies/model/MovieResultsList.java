@@ -4,19 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class  ResultsList {
+public class MovieResultsList {
 
     @SerializedName("results")
     private ArrayList<Movie> movieList;
 
-    public ArrayList<Movie> getPopularMovieList() {
+    public ArrayList<Movie> getMovieList() {
         return movieList;
     }
-
-    public ArrayList<Movie> getTopRatedMoviesList(){
-        return movieList;
-    }
-
-
-
 }

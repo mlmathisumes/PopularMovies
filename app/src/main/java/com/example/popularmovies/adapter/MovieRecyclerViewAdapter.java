@@ -1,8 +1,6 @@
 package com.example.popularmovies.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.popularmovies.R;
 import com.example.popularmovies.model.Movie;
-import com.example.popularmovies.ui.MovieDetailActivity;
-
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * {@link MovieRecyclerViewAdapter} exposes a list of movies to a
@@ -28,15 +24,17 @@ public class MovieRecyclerViewAdapter extends
         RecyclerView.Adapter<MovieRecyclerViewAdapter.MovieRecyclerViewHolder> {
 
     private static final String TAG = MovieRecyclerViewAdapter.class.getSimpleName();
-    private ArrayList<Movie> mMovieArrayList;
+    private List<? extends Movie> mMovieArrayList;
     private LayoutInflater mInflater;
     private Context context;
+    private final MovieAdapterOnItemClick mClickHandler;
 
 
-    public MovieRecyclerViewAdapter(Activity context, ArrayList<Movie> movieArrayList) {
+    public MovieRecyclerViewAdapter(Context context, MovieAdapterOnItemClick mClickHandler, final List<? extends Movie> newMovieArrayList) {
         mInflater = LayoutInflater.from(context);
-        mMovieArrayList = movieArrayList;
+        this.mClickHandler = mClickHandler;
         this.context = context;
+        this.mMovieArrayList = newMovieArrayList;
     }
 
     @NonNull
@@ -44,6 +42,10 @@ public class MovieRecyclerViewAdapter extends
     public MovieRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootView =  mInflater.inflate(R.layout.list_item, parent, false);
         return new MovieRecyclerViewHolder(rootView, this);
+    }
+
+    public interface MovieAdapterOnItemClick {
+            void onItemClick(Movie Movie);
     }
 
     @Override
@@ -56,39 +58,57 @@ public class MovieRecyclerViewAdapter extends
             Log.d(TAG, "Unable to download poster image");
         }
 
-        /**
-         * This gets called by the child views during a click.
-         *
-         * @param view The View that was clicked
-         */
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, MovieDetailActivity.class);
-                intent.putExtra("movie", movie);
-                context.startActivity(intent);
-            }
-        });
+        holder.bindMovie(position);
+
+    }
+
+    /**
+     * This function simply returns the number of items to display.
+     *
+     * @return The number of items available in our movie list
+     */
+    @Override
+    public int getItemCount() {
+        if (mMovieArrayList == null) return 0;
+        return mMovieArrayList.size();
     }
 
     /**
      * Cache of the children views for a movie list item.
      */
-    public class MovieRecyclerViewHolder extends RecyclerView.ViewHolder {
+    public class MovieRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ImageView iv_Poster;
+        ImageView iv_Poster;
+        Movie movie;
 
-        public MovieRecyclerViewHolder(@NonNull View itemView, MovieRecyclerViewAdapter adapter) {
+        MovieRecyclerViewHolder(@NonNull View itemView, MovieRecyclerViewAdapter adapter) {
             super(itemView);
             iv_Poster =  itemView.findViewById(R.id.iv_movie_backdrop);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            mClickHandler.onItemClick(movie);
+        }
+
+        void bindMovie(int index){
+            movie = mMovieArrayList.get(index);
 
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return mMovieArrayList.size();
-    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

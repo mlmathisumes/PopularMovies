@@ -44,7 +44,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="true"
-            android:background="#FFFFFF">
+            android:background="#FFFFFF"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,14 +56,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp">
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp">
 
                     <TextView
                         android:id="@+id/tv_original_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sonic the Hedgehog"
                         android:textColor="@color/colorContent"
                         android:textSize="22sp"
                         android:textStyle="bold"
@@ -70,36 +72,34 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp">
+                        android:paddingTop="4dp">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Release Date: "
+                            android:text="@string/release_date"
                             android:textSize="16sp"
-                            android:layout_marginRight="4dp"
+                            android:paddingRight="4dp"
                             android:textColor="@color/colorContent" />
 
                         <TextView
                             android:id="@+id/tv_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
+                            android:paddingBottom="4dp"
                             android:textSize="16sp"
-                            android:text="02/13/2020"
                             android:textColor="@color/colorContent" />
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="4dp">
+                        android:paddingTop="4dp">
                         <TextView
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="User Rating: "
+                            android:text="@string/user_rating"
                             android:textSize="16sp"
-                            android:layout_marginRight="4dp"
+                            android:paddingRight="4dp"
                             android:textColor="@color/colorContent"
                             />
 
@@ -107,7 +107,6 @@
                             android:id="@+id/tv_rating"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="5.9/10"
                             android:textSize="16sp"
                             android:textColor="@color/colorContent" />
                     </LinearLayout>
@@ -116,15 +115,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="6px"
                     android:background="#eeeeee"
-                    android:layout_marginTop="4dp" />
+                    android:paddingTop="4dp" />
                 <uk.co.deanwild.flowtextview.FlowTextView
                     android:id="@+id/ftv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:paddingTop="4dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
                     <ImageView
                         android:id="@+id/iv_movie_poster"
                         android:layout_width="100dp"
@@ -139,10 +138,80 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorContent" />
                 </uk.co.deanwild.flowtextview.FlowTextView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6px"
+                    android:background="#eeeeee" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="TRAILER"
+                    android:textColor="@color/colorContent"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_trailers"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <TextView
+                        android:id="@+id/emptyTrailersMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="No Trailers Available"
+                        android:textAlignment="gravity"
+                        android:textColor="@android:color/black"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:visibility="invisible"
+                        />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:background="#eeeeee" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="Reviews"
+                    android:textColor="@color/colorContent"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="invisible"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <TextView
+                        android:id="@+id/emptyReviewsMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="No Reviews Available"
+                        android:textAlignment="gravity"
+                        android:textColor="@android:color/black"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:visibility="invisible"
+                        />
+                </RelativeLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
-
-
     </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

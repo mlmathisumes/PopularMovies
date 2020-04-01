@@ -7,7 +7,9 @@
     <item android:id="@+id/rating"
         android:title="Rating"
         app:showAsAction="collapseActionView" />
-
+    <item android:id="@+id/favorites"
+        android:title="Favorites"
+        app:showAsAction="collapseActionView" />
 
 
 </menu>

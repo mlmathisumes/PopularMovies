@@ -1,98 +1,75 @@
 package com.example.popularmovies.viewmodel;
 
 
+import android.app.Application;
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
+import androidx.lifecycle.Observer;
 
-import com.example.popularmovies.GetMovieDataService;
+import com.example.popularmovies.database.MovieRepository;
 import com.example.popularmovies.model.Movie;
-import com.example.popularmovies.model.ResultsList;
-import com.example.popularmovies.utils.RetrofitInstance;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class MovieListViewModel extends ViewModel {
+public class MovieListViewModel extends AndroidViewModel {
 
     private static final String TAG = MovieListViewModel.class.getSimpleName();
-    private MutableLiveData<ArrayList<Movie>> movieListLiveData;
-    private ArrayList<Movie> movieArrayList;
-    private GetMovieDataService jsonMovieDBApi;
-    private static final String API_KEY = "";
+
+    private final MovieRepository movieRepository;
+    private final MediatorLiveData<List<Movie>> movieListLiveData;
+    private LiveData<List<Movie>> movieListSource;
 
 
-    public MovieListViewModel(){
-        movieListLiveData = new MutableLiveData<>();
-
-        init();
+    public MovieListViewModel(Application application, MovieRepository movieRepository) {
+        super(application);
+        this.movieRepository = movieRepository;
+        movieListLiveData = new MediatorLiveData<>();
+        Log.d(TAG, "Create MovieListViewModel Instance");
     }
 
-
-
-    public MutableLiveData<ArrayList<Movie>> getMovieMutableLiveData(){
-        if(movieListLiveData == null){
-            movieListLiveData = new MutableLiveData<>();
-        }
+    public LiveData<List<Movie>> getMovies(){
         return movieListLiveData;
     }
 
-    public void init() {
-        jsonMovieDBApi = RetrofitInstance.getRetrofitInstance().create(GetMovieDataService.class);
-        getPopularMovieList();
-
-
+    /**
+     * This method fetches the movie listing and caches database data
+     *
+     * @param sort_order The selected sort order from the RecyclerView
+     */
+    public void init(String sort_order){
+        fetchMovieList(sort_order);
+        movieRepository.initMoviesDb();
     }
 
-    public void getPopularMovieList() {
-        Call<ResultsList> call = jsonMovieDBApi.getPopularMovies(API_KEY);
+    /**
+     * This method fetches the movie listing
+     *
+     * @param sortOrder The selected sort order from the RecyclerView
+     */
+    public void fetchMovieList(String sortOrder){
+        final LiveData<List<Movie>> movieList;
+        movieList = movieRepository.getMovieListLiveData(sortOrder);
 
-        call.enqueue(new Callback<ResultsList>() {
+        if(sortOrder.equals("favorites") && movieList == null){
+            movieListLiveData.setValue(null);
+        }
+        if(movieListSource != null){
+            movieListLiveData.removeSource(movieListSource);
+            Log.d(TAG, "Removing source");
+        }
+        movieListSource = movieList;
+        movieListLiveData.addSource(movieListSource, new Observer<List<Movie>>() {
             @Override
-            public void onResponse(Call<ResultsList> call, Response<ResultsList> response) {
-                movieArrayList = response.body().getPopularMovieList();
-                if(movieArrayList != null){
-                    movieListLiveData.setValue(movieArrayList);
-                    Log.d(TAG, "Live Data set");
-
-                }else{
-                    Log.d(TAG, "Empty Arraylist");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultsList> call, Throwable t) {
-                Log.d(TAG, "Something went wrong.. Error message: " + t.getMessage());
+            public void onChanged(List<Movie> movies) {
+                movieListLiveData.postValue(movies);
             }
         });
+
     }
 
-    public void getTopRatedMoviesList(){
-        Call<ResultsList> call = jsonMovieDBApi.getTopRatedMovies(API_KEY);
-
-        call.enqueue(new Callback<ResultsList>() {
-            @Override
-            public void onResponse(Call<ResultsList> call, Response<ResultsList> response) {
-                movieArrayList = response.body().getTopRatedMoviesList();
-                if(movieArrayList != null){
-                    movieListLiveData.setValue(movieArrayList);
-                    Log.d(TAG, "Live Data set");
-
-                }else{
-                    Log.d(TAG, "Empty Arraylist");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultsList> call, Throwable t) {
-                Log.d(TAG, "Something went wrong.. Error message: " + t.getMessage());
-            }
-        });
-    }
 
 }
 

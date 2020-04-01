@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -35,107 +35,184 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@color/colorPrimary"
                 app:layout_scrollFlags="scroll"
-                />
+                app:popupTheme="@color/colorPrimary" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#FFFFFF"
             android:clipToPadding="true"
-            android:background="#FFFFFF">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="20dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="@dimen/movie_detail_margin"
-                android:layout_marginTop="@dimen/movie_detail_margin">
 
-                <TextView
-                    android:id="@+id/tv_original_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorContent"
-                    android:textSize="@dimen/original_title_size"
-                    android:textStyle="bold"
-                    app:fontFamily="@font/arima_madurai_bold"
-                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/widget_margin">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/release_date"
-                        android:textSize="@dimen/text_size"
-                        android:layout_marginRight="@dimen/widget_margin"
-                        android:textColor="@color/colorContent" />
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_release_date"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tv_original_title"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/widget_margin"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/colorContent" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/widget_margin">
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user_rating"
-                        android:textSize="@dimen/text_size"
-                        android:layout_marginRight="@dimen/widget_margin"
                         android:textColor="@color/colorContent"
-                        />
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/original_title_size"
+                        android:textStyle="bold"
+                        app:fontFamily="@font/arima_madurai_bold" />
 
-                    <TextView
-                        android:id="@+id/tv_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:textSize="@dimen/text_size"
-                        android:textColor="@color/colorContent" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/release_date"
+                            android:textColor="@color/colorContent"
+                            android:textSize="@dimen/text_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_release_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="4dp"
+                            android:textColor="@color/colorContent"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/user_rating"
+                            android:textColor="@color/colorContent"
+                            android:textSize="@dimen/text_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="4dp"
+
+                            android:textColor="@color/colorContent"
+                            android:textSize="@dimen/text_size" />
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="6px"
-                    android:background="#eeeeee"
-                    android:layout_marginTop="@dimen/widget_margin" />
-            <uk.co.deanwild.flowtextview.FlowTextView
-                android:id="@+id/ftv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/widget_margin"
-                android:layout_marginLeft="@dimen/movie_detail_margin"
-                android:layout_marginRight="@dimen/movie_detail_margin">
-                <ImageView
-                    android:id="@+id/iv_movie_poster"
-                    android:layout_width="@dimen/movie_poster_width"
-                    android:layout_height="@dimen/movie_poster_height"
-                    android:padding="@dimen/movie_poster_padding"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:scaleType="centerCrop" />
+                    android:background="#eeeeee" />
+
+                <uk.co.deanwild.flowtextview.FlowTextView
+                    android:id="@+id/ftv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_movie_poster"
+                        android:layout_width="@dimen/movie_poster_width"
+                        android:layout_height="@dimen/movie_poster_height"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:padding="@dimen/movie_poster_padding"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorContent" />
+                </uk.co.deanwild.flowtextview.FlowTextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6px"
+                    android:background="#eeeeee" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorContent" />
-                    </uk.co.deanwild.flowtextview.FlowTextView>
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="TRAILER"
+                    android:textColor="@color/colorContent"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_trailers"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:orientation="horizontal"
+                        android:paddingBottom="4dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <TextView
+                        android:id="@+id/emptyTrailersMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="No Trailers Available"
+                        android:textAlignment="gravity"
+                        android:textColor="@android:color/black"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:visibility="invisible"
+                        />
+                </RelativeLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="6px"
+                    android:background="#eeeeee" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:text="Reviews"
+                    android:textColor="@color/colorContent"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="invisible"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                    <TextView
+                        android:id="@+id/emptyReviewsMessage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="No Reviews Available"
+                        android:textAlignment="gravity"
+                        android:textColor="@android:color/black"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:visibility="invisible"
+                        />
+                </RelativeLayout>
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

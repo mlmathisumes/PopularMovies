@@ -1,8 +1,20 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="sample">Certain but she but shyness why cottage. Gay the put instrument sir entreaties affronting. Pretended exquisite see cordially the you. Weeks quiet do vexed or whose. Motionless if no to affronting imprudence no precaution. My indulged as disposal strongly attended. Parlors men express had private village man. Discovery moonlight recommend all one not. Indulged to answered prospect it bachelor is he bringing shutters. Pronounce forfeited mr direction oh he dashwoods ye unwilling."/>
-</string>
+    </string>
+    <string name="default_sort_order">popular</string>
     <string name="movie_backdrop">Movie Backdrop</string>
-    <string name="release_date">Release Date:</string>
     <string name="user_rating">User Rating:</string>
+    <string name="sort_order">sort_order</string>
+
+    <string name="movie">movie</string>
+    <string name="poster_path">https://image.tmdb.org/t/p/w185</string>
+    <string name="backdrop_path">https://image.tmdb.org/t/p/w342</string>
+    <string name="no_movies_available_msg">No Movies Available</string>
+    <string name="release_date">Release Date:</string>
+    <string name="trailer_image">Trailer image</string>
+    <string-array name="sort_by">
+        <item name="POPULAR">popular</item>
+        <item name="TOP_RATED">top_rated</item>
+    </string-array>
 </resources>
