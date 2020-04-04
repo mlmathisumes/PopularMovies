@@ -21,33 +21,29 @@ import java.util.List;
 public class MovieRepository {
     private static MovieRepository mInstance;
     private static final Object LOCK = new Object();
-    private MutableLiveData<List<Movie>> movieListLiveDataCache;
     private MutableLiveData<Boolean> favoriteIcon;
-    private Application application;
     private AppDatabase appDatabase;
     private final GetMovieDataSource getMovieDataSource;
     private final GetMovieDetailDataSource getMovieDetailDataSource;
     private AppExecutors appExecutors;
-    private GetMoviesDataService getMoviesDataService;
     private static final String TAG = MovieRepository.class.getSimpleName();
 
     // Constructor
-    private MovieRepository(GetMovieDataSource getMovieDataSource, AppDatabase appDatabase, AppExecutors appExecutors, GetMoviesDataService getMoviesDataService, GetMovieDetailDataSource getMovieDetailDataSource) {
+    private MovieRepository(GetMovieDataSource getMovieDataSource, AppDatabase appDatabase, AppExecutors appExecutors, GetMovieDetailDataSource getMovieDetailDataSource) {
         this.getMovieDataSource = getMovieDataSource;
         this.appDatabase = appDatabase;
         this.appExecutors = appExecutors;
-        this.getMoviesDataService = getMoviesDataService;
         this.getMovieDetailDataSource = getMovieDetailDataSource;
         favoriteIcon = new MutableLiveData<>();
     }
 
     public synchronized static MovieRepository
         getInstance(Context context, GetMovieDataSource getMovieDataSource,
-                    AppDatabase appDatabase, AppExecutors appExecutors, GetMoviesDataService getMoviesDataService,
+                    AppDatabase appDatabase, AppExecutors appExecutors,
                     GetMovieDetailDataSource getMovieDetailDataSource){
         if(mInstance == null){
             synchronized (LOCK){
-                mInstance = new MovieRepository(getMovieDataSource, appDatabase, appExecutors, getMoviesDataService, getMovieDetailDataSource);
+                mInstance = new MovieRepository(getMovieDataSource, appDatabase, appExecutors, getMovieDetailDataSource);
                 Log.d(TAG, "Made new Repository");
             }
         }
@@ -55,15 +51,12 @@ public class MovieRepository {
     }
 
     public LiveData<List<Movie>> getMovieListLiveData(String sort_order){
-        if(sort_order.equals("favorites")){
-            return getMoviesFromDb();
-        }
         return getMovieDataSource.getDownloadedMovies(sort_order);
     }
 
     public LiveData<Movie> getMovieById(int id, String sort_order){
         if(sort_order.equals(Constants.FAVORITES)){
-            return getMovieFromCacheDb(id);
+            return getMovieFromDb(id);
         }
         return getMovieDataSource.getMovieById(id);
     }
@@ -76,42 +69,15 @@ public class MovieRepository {
         return getMovieDetailDataSource.getTrailers(id);
     }
 
-    public void initMoviesDb(){
-        if(movieListLiveDataCache == null){
-            movieListLiveDataCache = new MutableLiveData<>();
-            appExecutors.diskIO().execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    List<Movie> dbMovies = appDatabase.movieDao().loadMovie();
-                    if(dbMovies != null){
-                        movieListLiveDataCache.postValue(dbMovies);
-                        Log.d(TAG, "Load from Database");
-                    }
-                }
-            });
-        }
-        Log.d(TAG, "Load from Cache");
+    public LiveData<List<Movie>> getMoviesFromDb(){
+        return appDatabase.movieDao().loadMovie();
     }
 
-    private MutableLiveData<List<Movie>> getMoviesFromDb(){
-
-        return movieListLiveDataCache;
+    public LiveData<Movie> getMovieFromDb(int id){
+        return appDatabase.movieDao().loadMovieById(id);
     }
 
-    private MutableLiveData<Movie> getMovieFromCacheDb(int id){
-        MutableLiveData<Movie> movieMutableLiveDataCacheDb = new MutableLiveData();
-        List<Movie> moviesFromCache = movieListLiveDataCache.getValue();
-        for(Movie movie: moviesFromCache){
-            if(movie.getId() == id){
-                movieMutableLiveDataCacheDb.setValue(movie);
-            }
-        }
-        return movieMutableLiveDataCacheDb;
-    }
-
-
-    public MutableLiveData<Boolean> checkIfMovieInDb(final int id){
+/*    public MutableLiveData<Boolean> checkIfMovieInDb(final int id){
         appExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
@@ -126,7 +92,7 @@ public class MovieRepository {
             }
         });
         return favoriteIcon;
-    }
+    }*/
 
     public void deleteMovie(final Movie movie){
         appExecutors.diskIO().execute(new Runnable() {
@@ -134,16 +100,7 @@ public class MovieRepository {
             public void run() {
                 appDatabase.movieDao().deleteMovie(movie);
                 Log.d(TAG, "Movie deleted");
-                List<Movie> dbMovies = appDatabase.movieDao().loadMovie();
-
-                if(dbMovies != null) {
-                    movieListLiveDataCache.postValue(dbMovies);
-                    Log.d(TAG, "Refreshed cache data");
-                    favoriteIcon.postValue(false);
-
-                }else{
-                    movieListLiveDataCache.postValue(null);
-                }
+                favoriteIcon.postValue(false);
             }
         });
     }
@@ -154,16 +111,8 @@ public class MovieRepository {
             public void run() {
                 appDatabase.movieDao().insertMovie(movie);
                 Log.d(TAG, "Movie added");
-                List<Movie> dbMovies = appDatabase.movieDao().loadMovie();
+                favoriteIcon.postValue(true);
 
-                if(dbMovies != null) {
-                    movieListLiveDataCache.postValue(dbMovies);
-                    Log.d(TAG, "Refreshed cache data");
-                    favoriteIcon.postValue(true);
-
-                }else{
-                    movieListLiveDataCache.postValue(null);
-                }
             }
         });
     }

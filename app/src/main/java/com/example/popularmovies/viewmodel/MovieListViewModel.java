@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer;
 
 import com.example.popularmovies.database.MovieRepository;
 import com.example.popularmovies.model.Movie;
+import com.example.popularmovies.utils.Constants;
 
 import java.util.List;
 
@@ -41,7 +42,6 @@ public class MovieListViewModel extends AndroidViewModel {
      */
     public void init(String sort_order){
         fetchMovieList(sort_order);
-        movieRepository.initMoviesDb();
     }
 
     /**
@@ -51,8 +51,11 @@ public class MovieListViewModel extends AndroidViewModel {
      */
     public void fetchMovieList(String sortOrder){
         final LiveData<List<Movie>> movieList;
-        movieList = movieRepository.getMovieListLiveData(sortOrder);
-
+        if(sortOrder.equals(Constants.FAVORITES)){
+            movieList = movieRepository.getMoviesFromDb();
+        }else{
+            movieList = movieRepository.getMovieListLiveData(sortOrder);
+        }
         if(sortOrder.equals("favorites") && movieList == null){
             movieListLiveData.setValue(null);
         }

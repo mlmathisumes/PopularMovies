@@ -19,7 +19,7 @@ public class InjectUtils {
         GetMoviesDataService getMoviesDataService = RetrofitInstance.getRetrofitInstance().create(GetMoviesDataService.class);
         GetMovieDataSource getMovieDataSource = GetMovieDataSource.getInstance(getMoviesDataService);
         GetMovieDetailDataSource getMovieDetailDataSource = GetMovieDetailDataSource.getInstance(getMoviesDataService);
-        return MovieRepository.getInstance(context.getApplicationContext(),getMovieDataSource, appDatabase, appExecutors, getMoviesDataService, getMovieDetailDataSource);
+        return MovieRepository.getInstance(context.getApplicationContext(),getMovieDataSource, appDatabase, appExecutors, getMovieDetailDataSource);
     }
 
     public static MainViewModelFactory provideMainActivityViewModelFactory(Application application){
